@@ -2,6 +2,7 @@ import React from 'react';
 import Results from '../Results/Results';
 import EmptyResult from '../EmptyResult/EmptyResult';
 import './Search.css';
+import ErrorButton from '../ErrorButton/ErrorButton';
 
 export interface SearchPeopleResults {
   name: string;
@@ -95,6 +96,7 @@ export default class Search extends React.Component {
           <button type="button" onClick={this.handleClick}>
             Search
           </button>
+          <ErrorButton />
         </div>
 
         <section className="results">
