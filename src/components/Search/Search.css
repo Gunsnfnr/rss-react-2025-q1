@@ -1,9 +1,9 @@
 button {
   border-radius: 5px;
   border: 1px solid #e1e1e1;
-  padding: 0.1em 1em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: 0.2rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 400;
   font-family: inherit;
   background-color: #7b87ba;
   cursor: pointer;
@@ -26,4 +26,5 @@ button:hover {
 .results {
   display: flex;
   flex-wrap: wrap;
+  border-top: 1px solid silver;
 }

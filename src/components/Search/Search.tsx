@@ -1,5 +1,5 @@
 import React from 'react';
-import Result from '../Result/Result';
+import Results from '../Results/Results';
 import EmptyResult from '../EmptyResult/EmptyResult';
 import './Search.css';
 
@@ -19,11 +19,11 @@ interface ReturnedData {
 export default class Search extends React.Component {
   state: {
     userInput: string;
-    searchResult: SearchPeopleResults[] | null;
+    searchResults: SearchPeopleResults[] | null;
     loading: boolean;
   } = {
     userInput: '',
-    searchResult: null,
+    searchResults: null,
     loading: false,
   };
 
@@ -57,11 +57,11 @@ export default class Search extends React.Component {
         });
         if (data.results.length > 0) {
           this.setState({
-            searchResult: data.results,
+            searchResults: data.results,
           });
         } else {
           this.setState({
-            searchResult: [],
+            searchResults: [],
           });
         }
       })
@@ -69,6 +69,10 @@ export default class Search extends React.Component {
         console.log(error);
       });
   };
+
+  componentDidMount() {
+    this.sendQuery('');
+  }
 
   render(): React.ReactNode {
     return (
@@ -88,9 +92,9 @@ export default class Search extends React.Component {
         <section className="results">
           {this.state.loading && <div>Loading...</div>}
           {!this.state.loading &&
-            Array.isArray(this.state.searchResult) &&
-            (this.state.searchResult.length > 0 ? (
-              <Result searchResult={this.state.searchResult} />
+            Array.isArray(this.state.searchResults) &&
+            (this.state.searchResults.length > 0 ? (
+              <Results searchResults={this.state.searchResults} />
             ) : (
               <EmptyResult searchQuery={this.state.userInput} />
             ))}

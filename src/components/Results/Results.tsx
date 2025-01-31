@@ -2,15 +2,15 @@ import React from 'react';
 import './Results.css';
 import { SearchPeopleResults } from '../Search/Search';
 
-interface ResultProps {
-  searchResult: SearchPeopleResults[];
+interface ResultsProps {
+  searchResults: SearchPeopleResults[];
 }
 
-export default class Result extends React.Component<ResultProps> {
+export default class Results extends React.Component<ResultsProps> {
   render(): React.ReactNode {
     return (
       <>
-        {this.props.searchResult.map(
+        {this.props.searchResults.map(
           (elem: SearchPeopleResults, index: number) => {
             return (
               <div className="star-wars-character" key={index}>
