@@ -1,10 +1,14 @@
 import React from 'react';
+import Result from '../Result/Result';
+
 export interface SearchPeopleResults {
   name: string;
 }
+
 interface ReturnedData {
   results: SearchPeopleResults[];
 }
+
 export default class Search extends React.Component {
   state: {
     userInput: string;
@@ -13,6 +17,7 @@ export default class Search extends React.Component {
     userInput: '',
     searchResult: [],
   };
+
   handleChange = (event: React.ChangeEvent) => {
     if (event.target instanceof HTMLInputElement) {
       this.setState({
@@ -20,6 +25,7 @@ export default class Search extends React.Component {
       });
     }
   };
+
   handleClick = () => {
     this.setState({
       userInput: this.state.userInput.trim(),
@@ -27,6 +33,7 @@ export default class Search extends React.Component {
     console.log(this.state.userInput);
     this.sendQuery(this.state.userInput);
   };
+
   sendQuery = async (searchString: string) => {
     await fetch(`https://swapi.dev/api/people/?search=${searchString}`)
       .then((resp: Response) => {
@@ -46,6 +53,7 @@ export default class Search extends React.Component {
         console.log(error);
       });
   };
+
   render(): React.ReactNode {
     return (
       <>
@@ -59,6 +67,10 @@ export default class Search extends React.Component {
             Search
           </button>
         </div>
+
+        {this.state.searchResult.length > 0 && (
+          <Result searchResult={this.state.searchResult} />
+        )}
       </>
     );
   }
