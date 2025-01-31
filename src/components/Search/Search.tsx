@@ -1,5 +1,6 @@
 import React from 'react';
 import Result from '../Result/Result';
+import EmptyResult from '../EmptyResult/EmptyResult';
 
 export interface SearchPeopleResults {
   name: string;
@@ -12,10 +13,10 @@ interface ReturnedData {
 export default class Search extends React.Component {
   state: {
     userInput: string;
-    searchResult: SearchPeopleResults[];
+    searchResult: SearchPeopleResults[] | null;
   } = {
     userInput: '',
-    searchResult: [],
+    searchResult: null,
   };
 
   handleChange = (event: React.ChangeEvent) => {
@@ -47,6 +48,10 @@ export default class Search extends React.Component {
           this.setState({
             searchResult: data.results,
           });
+        } else {
+          this.setState({
+            searchResult: [],
+          });
         }
       })
       .catch((error) => {
@@ -68,9 +73,14 @@ export default class Search extends React.Component {
           </button>
         </div>
 
-        {this.state.searchResult.length > 0 && (
-          <Result searchResult={this.state.searchResult} />
-        )}
+        {Array.isArray(this.state.searchResult) &&
+          this.state.searchResult.length > 0 && (
+            <Result searchResult={this.state.searchResult} />
+          )}
+        {Array.isArray(this.state.searchResult) &&
+          this.state.searchResult.length === 0 && (
+            <EmptyResult searchQuery={this.state.userInput} />
+          )}
       </>
     );
   }
