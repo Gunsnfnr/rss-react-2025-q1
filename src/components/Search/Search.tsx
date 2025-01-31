@@ -1,9 +1,15 @@
 import React from 'react';
 import Result from '../Result/Result';
 import EmptyResult from '../EmptyResult/EmptyResult';
+import './Search.css';
 
 export interface SearchPeopleResults {
   name: string;
+  height: number;
+  mass: number;
+  birth_year: string;
+  eye_color: string;
+  skin_color: string;
 }
 
 interface ReturnedData {
@@ -35,7 +41,7 @@ export default class Search extends React.Component {
       userInput: this.state.userInput.trim(),
     });
     console.log(this.state.userInput);
-    this.sendQuery(this.state.userInput);
+    this.sendQuery(this.state.userInput.trim());
   };
 
   sendQuery = async (searchString: string) => {
@@ -67,8 +73,9 @@ export default class Search extends React.Component {
   render(): React.ReactNode {
     return (
       <>
-        <div>
+        <div className="search">
           <input
+            className="input-field"
             type="text"
             value={this.state.userInput}
             onChange={this.handleChange}
@@ -78,17 +85,16 @@ export default class Search extends React.Component {
           </button>
         </div>
 
-        {this.state.loading && <div>Loading...</div>}
-        {!this.state.loading &&
-          Array.isArray(this.state.searchResult) &&
-          this.state.searchResult.length > 0 && (
-            <Result searchResult={this.state.searchResult} />
-          )}
-        {!this.state.loading &&
-          Array.isArray(this.state.searchResult) &&
-          this.state.searchResult.length === 0 && (
-            <EmptyResult searchQuery={this.state.userInput} />
-          )}
+        <section className="results">
+          {this.state.loading && <div>Loading...</div>}
+          {!this.state.loading &&
+            Array.isArray(this.state.searchResult) &&
+            (this.state.searchResult.length > 0 ? (
+              <Result searchResult={this.state.searchResult} />
+            ) : (
+              <EmptyResult searchQuery={this.state.userInput} />
+            ))}
+        </section>
       </>
     );
   }
