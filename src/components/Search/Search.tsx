@@ -40,7 +40,11 @@ export default class Search extends React.Component {
       loading: true,
       userInput: this.state.userInput.trim(),
     });
-    console.log(this.state.userInput);
+    localStorage.setItem(
+      'gunsnfnr.swQuery',
+      JSON.stringify(this.state.userInput.trim())
+    );
+    console.log(this.state.userInput.trim());
     this.sendQuery(this.state.userInput.trim());
   };
 
@@ -71,7 +75,11 @@ export default class Search extends React.Component {
   };
 
   componentDidMount() {
-    this.sendQuery('');
+    const storedSearchString: string | null =
+      localStorage.getItem('gunsnfnr.swQuery');
+    if (storedSearchString) {
+      this.sendQuery(JSON.parse(storedSearchString));
+    } else this.sendQuery('');
   }
 
   render(): React.ReactNode {
