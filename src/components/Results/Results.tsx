@@ -1,16 +1,16 @@
 import React from 'react';
 import './Results.css';
-import { SearchPeopleResults } from '../Main/Main';
+import { SearchCharactersResults } from '../../types';
 
 interface ResultsProps {
-  searchResults: SearchPeopleResults[];
+  searchResults: SearchCharactersResults[];
 }
 
 export default class Results extends React.Component<ResultsProps> {
   render(): React.ReactNode {
     return (
       <>
-        {this.props.searchResults.map((elem: SearchPeopleResults, index: number) => {
+        {this.props.searchResults.map((elem: SearchCharactersResults, index: number) => {
           return (
             <div className="star-wars-character" key={index}>
               <div className="name">{elem.name}</div>

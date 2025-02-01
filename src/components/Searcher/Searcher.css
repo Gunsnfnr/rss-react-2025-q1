@@ -24,13 +24,3 @@ button:hover {
 .input-field {
   padding-left: 5px;
 }
-
-.results {
-  display: flex;
-  flex-wrap: wrap;
-  border-top: 1px solid silver;
-}
-
-.loading {
-  margin: 20px 0 0 10px;
-}

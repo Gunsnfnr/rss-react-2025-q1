@@ -5,3 +5,23 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #353535;
 }
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid silver;
+}
+
+.loading {
+  margin: 20px 0 0 10px;
+}
+.results:has(.error) {
+  width: 50vw;
+  height: 50vh;
+}
+.error {
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
