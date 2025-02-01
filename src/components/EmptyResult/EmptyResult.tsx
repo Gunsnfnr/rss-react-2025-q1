@@ -11,12 +11,11 @@ export default class EmptyResult extends React.Component<EmptyResultProps> {
       <>
         <div className="empty">
           <div>
-            Nothing was found for the search term &quot;{this.props.searchQuery}
+            Nothing was found for the search term &quot;
+            {this.props.searchQuery}
             &quot;.
           </div>
-          <div>
-            Don&apos;t forget, we are looking for Star Wars characters o_0
-          </div>
+          <div>Don&apos;t forget, we are looking for Star Wars characters o_0</div>
         </div>
       </>
     );

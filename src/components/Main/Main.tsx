@@ -1,7 +1,7 @@
 import React from 'react';
 import Results from '../Results/Results';
 import EmptyResult from '../EmptyResult/EmptyResult';
-import './Search.css';
+import './Main.css';
 import ErrorButton from '../ErrorButton/ErrorButton';
 
 export interface SearchPeopleResults {
@@ -17,7 +17,7 @@ interface ReturnedData {
   results: SearchPeopleResults[];
 }
 
-export default class Search extends React.Component {
+export default class Main extends React.Component {
   state: {
     userInput: string;
     searchResults: SearchPeopleResults[] | null;
@@ -25,38 +25,29 @@ export default class Search extends React.Component {
   } = {
     userInput: '',
     searchResults: null,
-    loading: false,
+    loading: true,
   };
 
-  handleChange = (event: React.ChangeEvent) => {
-    if (event.target instanceof HTMLInputElement) {
-      this.setState({
-        userInput: event.target.value,
-      });
-    }
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ userInput: event.target.value });
   };
 
-  handleClick = () => {
-    this.setState({
-      loading: true,
-      userInput: this.state.userInput.trim(),
-    });
-    localStorage.setItem(
-      'gunsnfnr.swQuery',
-      JSON.stringify(this.state.userInput.trim())
-    );
-    console.log(this.state.userInput.trim());
-    this.sendQuery(this.state.userInput.trim());
+  handleClick: () => Promise<void> = async () => {
+    this.setState({ loading: true, userInput: this.state.userInput.trim() });
+    localStorage.setItem('gunsnfnr.swQuery', this.state.userInput.trim());
+    await this.getResults(this.state.userInput.trim());
   };
 
-  sendQuery = async (searchString: string) => {
+  getResults: (searchString: string) => Promise<void> = async (searchString) => {
     await fetch(`https://swapi.dev/api/people/?search=${searchString}`)
       .then((resp: Response) => {
-        console.log('resp: ', resp);
-        if (resp.status === 200) return resp.json();
+        if (resp.status === 200) {
+          return resp.json();
+        } else {
+          throw new Error(`Something went wrong ${resp}`);
+        }
       })
       .then((data: ReturnedData) => {
-        console.log(data);
         this.setState({
           loading: false,
         });
@@ -75,12 +66,14 @@ export default class Search extends React.Component {
       });
   };
 
-  componentDidMount() {
-    const storedSearchString: string | null =
-      localStorage.getItem('gunsnfnr.swQuery');
+  async componentDidMount() {
+    const storedSearchString: string | null = localStorage.getItem('gunsnfnr.swQuery');
     if (storedSearchString) {
-      this.sendQuery(JSON.parse(storedSearchString));
-    } else this.sendQuery('');
+      await this.getResults(storedSearchString);
+      this.setState({
+        userInput: storedSearchString,
+      });
+    } else this.getResults('');
   }
 
   render(): React.ReactNode {
@@ -93,14 +86,22 @@ export default class Search extends React.Component {
             value={this.state.userInput}
             onChange={this.handleChange}
           />
-          <button type="button" onClick={this.handleClick}>
+          <button
+            type="button"
+            onClick={() => {
+              const handler = async () => {
+                await this.handleClick();
+              };
+              handler().catch(() => {});
+            }}
+          >
             Search
           </button>
           <ErrorButton />
         </div>
 
         <section className="results">
-          {this.state.loading && <div>Loading...</div>}
+          {this.state.loading && <div className="loading">Loading...</div>}
           {!this.state.loading &&
             Array.isArray(this.state.searchResults) &&
             (this.state.searchResults.length > 0 ? (
