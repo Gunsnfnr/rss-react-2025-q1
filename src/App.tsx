@@ -1,18 +1,18 @@
 import React from 'react';
-import { SearchCharactersResults } from './types';
+import { SearchSpeciesResults } from './types';
 import Searcher from './components/Searcher/Searcher';
 import Results from './components/Results/Results';
 import EmptyResult from './components/EmptyResult/EmptyResult';
-import { getCharacters } from './api/apiRequest';
+import { getSpecies } from './api/apiRequest';
 
 interface SearchResults {
-  results: SearchCharactersResults[];
+  results: SearchSpeciesResults[];
 }
 
 export default class App extends React.Component {
   state: {
     userInput: string;
-    searchResults: SearchCharactersResults[] | null;
+    searchResults: SearchSpeciesResults[] | null;
     isLoading: boolean;
     isError: boolean;
   } = {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
   };
 
   getSearchResults: (searchString: string) => Promise<void> = async (searchString) => {
-    getCharacters(searchString)
+    getSpecies(searchString)
       .then((data: SearchResults) => {
         this.setState({
           isLoading: false,

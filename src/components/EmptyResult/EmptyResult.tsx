@@ -15,7 +15,7 @@ export default class EmptyResult extends React.Component<EmptyResultProps> {
             {this.props.searchQuery}
             &quot;.
           </div>
-          <div>Don&apos;t forget, we are looking for Star Wars characters o_0</div>
+          <div>Don&apos;t forget, we are looking for Star Wars species o_0</div>
         </div>
       </>
     );
