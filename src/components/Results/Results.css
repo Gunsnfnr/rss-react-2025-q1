@@ -1,12 +1,33 @@
 .star-wars-species {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-width: 180px;
   margin: 20px 10px;
   object-fit: contain;
+  padding: 5px 10px;
+  background-color: #474c63;
+  border-radius: 5px;
+
   .name {
-    color: gold;
+    color: #ebca1c;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    text-align: center;
   }
 }
 
 .image {
-  max-height: 300px;
+  max-height: 310px;
+  border-radius: 5px;
+}
+
+.species-data {
+  max-width: 220px;
+  margin: 7px 0;
+  word-wrap: break-word;
+  .title {
+    color: #c1bab1;
+  }
 }

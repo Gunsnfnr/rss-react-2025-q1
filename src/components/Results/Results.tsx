@@ -15,14 +15,26 @@ export default class Results extends React.Component<ResultsProps> {
           return (
             <div className="star-wars-species" key={elem.name}>
               <div className="name">{elem.name}</div>
-              <img className="image" src={getSpeciesImage(elem.url)} />
+              <img
+                className="image"
+                src={getSpeciesImage(elem.url)}
+                alt={elem.name}
+                title={elem.name}
+              />
               <div className="species-data">
-                <div className="classification">Classification: {elem.classification}</div>
-                <div className="average_lifespan">
-                  Average lifespan: {elem.average_lifespan} years
+                <div className="classification">
+                  <span className="title">Classification:</span> {elem.classification}
                 </div>
-                <div className="language">Language: {elem.language}</div>
-                <div className="eye-color">Eye colors: {elem.eye_colors}</div>
+                <div className="average_lifespan">
+                  <span className="title">Average lifespan:</span> {elem.average_lifespan}
+                  &nbsp;years
+                </div>
+                <div className="language">
+                  <span className="title">Language:</span> {elem.language}
+                </div>
+                <div className="eye-color">
+                  <span className="title">Eye colors:</span> {elem.eye_colors}
+                </div>
               </div>
             </div>
           );
