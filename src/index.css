@@ -1,0 +1,31 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #2f354f;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+  border-top: 1px solid #6970a1;
+  width: calc(100vw - 30px);
+}
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.results:has(.loading),
+.results:has(.error) {
+  height: 70vh;
+}
+.error {
+  margin: 0 auto;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
