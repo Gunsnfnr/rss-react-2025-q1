@@ -1,55 +1,44 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Searcher.css';
-import ErrorButton from '../ErrorButton/ErrorButton';
+import { ErrorButton } from '../ErrorButton/ErrorButton';
 
 interface SearcherProps {
   searchTermSend: (userInput: string) => void;
 }
 
-export default class Searcher extends Component<SearcherProps> {
-  state: {
-    userInput: string;
-  } = {
-    userInput: '',
-  };
+const Searcher = ({ searchTermSend }: SearcherProps) => {
+  const [userInput, setUserInput] = useState('');
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ userInput: event.target.value });
-  };
-
-  handleClick: () => void = () => {
-    this.setState({ userInput: this.state.userInput.trim() });
-    this.props.searchTermSend(this.state.userInput);
-  };
-
-  componentDidMount(): void {
+  useEffect(() => {
     const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
-
     if (storedSearchTerm) {
-      this.setState({
-        userInput: storedSearchTerm,
-      });
+      setUserInput(storedSearchTerm);
     }
-  }
-  render() {
-    return (
-      <div className="search">
-        <input
-          className="input-field"
-          type="text"
-          value={this.state.userInput}
-          onChange={this.handleChange}
-        />
-        <button
-          type="button"
-          onClick={() => {
-            this.handleClick();
-          }}
-        >
-          Search
-        </button>
-        <ErrorButton />
-      </div>
-    );
-  }
-}
+  }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(event.target.value);
+  };
+
+  const handleClick: () => void = () => {
+    setUserInput(userInput.trim());
+    searchTermSend(userInput);
+  };
+
+  return (
+    <div className="search">
+      <input className="input-field" type="text" value={userInput} onChange={handleChange} />
+      <button
+        type="button"
+        onClick={() => {
+          handleClick();
+        }}
+      >
+        Search
+      </button>
+      <ErrorButton />
+    </div>
+  );
+};
+
+export { Searcher };
