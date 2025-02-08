@@ -4,30 +4,28 @@ import { Searcher } from './components/Searcher/Searcher';
 import { Results } from './components/Results/Results';
 import { EmptyResult } from './components/EmptyResult/EmptyResult';
 import { getSpecies } from './api/apiRequest';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 interface SearchResults {
   results: SearchSpeciesResults[];
 }
 
 const App = () => {
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useLocalStorage('');
   const [searchResults, setSearchResults] = useState<SearchSpeciesResults[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
-
-    if (storedSearchTerm) {
-      getSearchResults(storedSearchTerm);
-      setUserInput(storedSearchTerm);
+    if (userInput) {
+      getSearchResults(userInput);
+      setUserInput(userInput);
     } else getSearchResults('');
-  }, []);
+  }, [userInput, setUserInput]);
 
   const handleSearchTermSend = async (userInput: string) => {
     setIsLoading(true);
     setUserInput(userInput.trim());
-    localStorage.setItem('gunsnfnr.swQuery', userInput.trim());
     await getSearchResults(userInput.trim());
   };
 
