@@ -1,4 +1,4 @@
-import './EmptyResult.css';
+import style from './EmptyResult.module.css';
 
 interface EmptyResultProps {
   searchQuery: string;
@@ -7,7 +7,7 @@ interface EmptyResultProps {
 const EmptyResult = ({ searchQuery }: EmptyResultProps) => {
   return (
     <>
-      <div className="empty">
+      <div className={style.empty}>
         <div>
           Nothing was found for the search term &quot;
           {searchQuery}

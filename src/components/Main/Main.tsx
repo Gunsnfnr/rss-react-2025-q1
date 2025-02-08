@@ -5,6 +5,7 @@ import { Results } from '../../components/Results/Results';
 import { EmptyResult } from '../../components/EmptyResult/EmptyResult';
 import { getSpecies } from '../../api/apiRequest';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import style from './Main.module.css';
 
 interface SearchResults {
   results: SearchSpeciesResults[];
@@ -46,9 +47,9 @@ const Main = () => {
   return (
     <>
       <Searcher searchTermSend={handleSearchTermSend} />
-      <section className="results">
+      <section className={style.results}>
         {isLoading ? (
-          <div className="loading">Loading...</div>
+          <div className={style.loading}>Loading...</div>
         ) : (
           Array.isArray(searchResults) &&
           (searchResults.length > 0 ? (
@@ -57,7 +58,7 @@ const Main = () => {
             <EmptyResult searchQuery={userInput} />
           ))
         )}
-        {isError && <div className="error">Unfortunately, something went wrong :-/</div>}
+        {isError && <div className={style.error}>Unfortunately, something went wrong :-/</div>}
       </section>
     </>
   );

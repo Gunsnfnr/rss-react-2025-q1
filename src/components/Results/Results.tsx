@@ -1,4 +1,4 @@
-import './Results.css';
+import style from './Results.module.css';
 import { SearchSpeciesResults } from '../../types';
 import { getSpeciesImage } from '../../api/apiRequest';
 
@@ -11,26 +11,26 @@ const Results = ({ searchResults }: ResultsProps) => {
     <>
       {searchResults.map((elem: SearchSpeciesResults) => {
         return (
-          <div className="star-wars-species" key={elem.name}>
+          <div className={style.star_wars_species} key={elem.name}>
             <div className="name">{elem.name}</div>
             <img
-              className="image"
+              className={style.image}
               src={getSpeciesImage(elem.url)}
               alt={elem.name}
               title={elem.name}
             />
-            <div className="species-data">
-              <div className="classification">
+            <div className={style.species_data}>
+              <div>
                 <span className="title">Classification:</span> {elem.classification}
               </div>
-              <div className="average_lifespan">
+              <div>
                 <span className="title">Average lifespan:</span> {elem.average_lifespan}
                 &nbsp;years
               </div>
-              <div className="language">
+              <div>
                 <span className="title">Language:</span> {elem.language}
               </div>
-              <div className="eye-color">
+              <div>
                 <span className="title">Eye colors:</span> {elem.eye_colors}
               </div>
             </div>
