@@ -1,0 +1,23 @@
+:root {
+  --text: #fff;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 10px 20px 10px;
+}
+.prev,
+.next {
+  padding: 3px 5px;
+}
+
+.page_number {
+  color: #fff;
+  padding: 3px 10px;
+}
+
+.prev:disabled,
+.next:disabled {
+  cursor: default;
+}
