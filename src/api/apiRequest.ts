@@ -1,10 +1,11 @@
 import { Species } from '../types';
 
-const BASE_API_URL = 'https://swapi.dev/api/species/';
+// const BASE_API_URL = 'https://swapi.dev/api/species/';
+const BASE_API_URL = 'https://swapi.py4e.com/api/species/';
 const BASE_IMAGE_API_URL = 'https://starwars-visualguide.com/assets/img/species/';
 
-export const getAllSpecies = async (searchString: string) => {
-  const data = await fetch(`${BASE_API_URL}?search=${searchString}`)
+export const getAllSpecies = async (searchString: string, pageNumber: number) => {
+  const data = await fetch(`${BASE_API_URL}?search=${searchString}&page=${pageNumber}`)
     .then((resp: Response) => {
       if (resp.status === 200) {
         return resp.json();
@@ -15,7 +16,6 @@ export const getAllSpecies = async (searchString: string) => {
     .catch((error) => {
       throw new Error(`Something went wrong. Error text:\n${error}`);
     });
-  console.log('data: ', data.results);
   return data;
 };
 
