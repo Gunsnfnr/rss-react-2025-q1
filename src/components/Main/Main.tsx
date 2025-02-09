@@ -25,9 +25,9 @@ const Main = () => {
   const [nextPage, setNextPage] = useState<null | string>(null);
   const { pageId } = useParams();
   const navigate = useNavigate();
+  const [wasUseEffUsed, setWasUseEffUsed] = useState(false);
 
   const handleSearchTermSend = (userInput: string) => {
-    console.log('pageNumber: ', pageNumber);
     setPageNumber(START_PAGE);
     navigate(`/page/${START_PAGE}`);
     setIsLoading(true);
@@ -58,8 +58,10 @@ const Main = () => {
   };
 
   useEffect(() => {
+    if (wasUseEffUsed) return;
     getSearchResults(userInput, pageNumber);
-  }, []);
+    setWasUseEffUsed(true);
+  }, [pageNumber, userInput, wasUseEffUsed]);
 
   useEffect(() => {
     if (pageId && pageId !== String(pageNumber)) {

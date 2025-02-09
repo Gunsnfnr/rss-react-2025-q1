@@ -1,7 +1,6 @@
 import { Species } from '../types';
 
-// const BASE_API_URL = 'https://swapi.dev/api/species/';
-const BASE_API_URL = 'https://swapi.py4e.com/api/species/';
+const BASE_API_URL = 'https://swapi.dev/api/species/';
 const BASE_IMAGE_API_URL = 'https://starwars-visualguide.com/assets/img/species/';
 
 export const getAllSpecies = async (searchString: string, pageNumber: number) => {
