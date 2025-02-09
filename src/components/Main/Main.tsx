@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
-import { SearchSpeciesResults } from '../../types';
+import { Species } from '../../types';
 import { Searcher } from '../../components/Searcher/Searcher';
 import { Results } from '../../components/Results/Results';
 import { EmptyResult } from '../../components/EmptyResult/EmptyResult';
-import { getSpecies } from '../../api/apiRequest';
+import { getAllSpecies } from '../../api/apiRequest';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import style from './Main.module.css';
+import { Outlet } from 'react-router';
 
 interface SearchResults {
-  results: SearchSpeciesResults[];
+  results: Species[];
 }
 
 const Main = () => {
   const [userInput, setUserInput] = useLocalStorage('');
-  const [searchResults, setSearchResults] = useState<SearchSpeciesResults[] | null>(null);
+  const [searchResults, setSearchResults] = useState<Species[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -31,7 +32,7 @@ const Main = () => {
   };
 
   const getSearchResults: (searchString: string) => Promise<void> = async (searchString) => {
-    getSpecies(searchString)
+    getAllSpecies(searchString)
       .then((data: SearchResults) => {
         setIsLoading(false);
         setSearchResults(data.results);
@@ -47,13 +48,16 @@ const Main = () => {
   return (
     <>
       <Searcher searchTermSend={handleSearchTermSend} />
-      <section className={style.results}>
+      <section className={style.main}>
         {isLoading ? (
           <div className={style.loading}>Loading...</div>
         ) : (
           Array.isArray(searchResults) &&
           (searchResults.length > 0 ? (
-            <Results searchResults={searchResults} />
+            <div className={style.results_wrapper}>
+              <Results searchResults={searchResults} />
+              <Outlet />
+            </div>
           ) : (
             <EmptyResult searchQuery={userInput} />
           ))
