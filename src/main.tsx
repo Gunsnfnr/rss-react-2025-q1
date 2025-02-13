@@ -1,4 +1,4 @@
-// import { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx';
@@ -9,13 +9,11 @@ const rootElement = document.getElementById('root');
 
 if (rootElement instanceof HTMLElement)
   createRoot(rootElement).render(
-    // <StrictMode>
-    <ErrorBoundary>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ErrorBoundary>
+    <StrictMode>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ErrorBoundary>
+    </StrictMode>
   );
-{
-  /* </StrictMode> */
-}

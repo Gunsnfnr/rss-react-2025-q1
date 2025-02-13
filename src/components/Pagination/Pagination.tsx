@@ -16,7 +16,7 @@ const Pagination = (props: PaginationProps) => {
       <button
         className={style.prev}
         onClick={() => handleNavBtn(props.page - 1)}
-        disabled={props.page === 1 ? true : false}
+        disabled={props.page === 1}
       >
         Prev
       </button>
@@ -24,7 +24,7 @@ const Pagination = (props: PaginationProps) => {
       <button
         className={style.next}
         onClick={() => handleNavBtn(props.page + 1)}
-        disabled={!props.nextPage ? true : false}
+        disabled={!props.nextPage}
       >
         Next
       </button>

@@ -6,6 +6,7 @@ import { getSpecies } from '../../api/apiRequest';
 
 const Details = () => {
   const { id } = useParams<{ id: string }>();
+  const { pageId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [species, setSpecies] = useState<Species | undefined>(undefined);
   const [isError, setIsError] = useState(false);
@@ -70,14 +71,14 @@ const Details = () => {
                   <span className={style.text}>{species.skin_colors}</span>
                 </div>
               </div>
-              <Link to="/" className={style.close}>
+              <Link to={`/page/${pageId}/`} className={style.close}>
                 <button>Close</button>
               </Link>
             </div>
           </div>
           <div
             className={style.details_backdrop}
-            onClick={() => navigate('/')}
+            onClick={() => navigate(`/page/${pageId}/`)}
             aria-label="Close"
           ></div>
         </>
@@ -85,8 +86,8 @@ const Details = () => {
       {isError && (
         <>
           <div className={style.error}>Unfortunately, something went wrong :-/</div>
-          <Link to="/">
-            <button className={style.close}>Close card</button>
+          <Link to={`/page/${pageId}/`}>
+            <button className={style.close}>Close</button>
           </Link>
         </>
       )}
