@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Species } from '../../types';
 import { Searcher } from '../../components/Searcher/Searcher';
 import { Results } from '../../components/Results/Results';
@@ -8,6 +8,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import style from './Main.module.css';
 import { Outlet, useNavigate, useParams } from 'react-router';
 import { Pagination } from '../Pagination/Pagination';
+import { ThemeContext } from '../../context/themeContext';
 
 interface SearchResults {
   results: Species[];
@@ -26,6 +27,7 @@ const Main = () => {
   const { pageId } = useParams();
   const navigate = useNavigate();
   const [wasUseEffUsed, setWasUseEffUsed] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   const handleSearchTermSend = (userInput: string) => {
     setPageNumber(START_PAGE);
@@ -79,7 +81,7 @@ const Main = () => {
   return (
     <>
       <Searcher searchTermSend={handleSearchTermSend} />
-      <section className={style.main}>
+      <section className={style.main} data-theme={theme}>
         {isLoading ? (
           <div className={style.loading}>Loading...</div>
         ) : (
