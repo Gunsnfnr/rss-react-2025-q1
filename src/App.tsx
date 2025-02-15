@@ -10,7 +10,7 @@ const App = () => {
       <Route path="page/:pageId" element={<Main />}>
         <Route path="species/:id" element={<Details />} />
       </Route>
-      <Route path="*" element={<NotFound />}></Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

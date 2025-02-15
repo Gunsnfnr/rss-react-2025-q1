@@ -8,8 +8,10 @@ export const getAllSpecies = async (searchString: string, pageNumber: number) =>
     .then((resp: Response) => {
       if (resp.status === 200) {
         return resp.json();
+      } else if (resp.status === 404) {
+        return { results: [] };
       } else {
-        throw new Error(`Something went wrong.`);
+        throw new Error(`Something went wrong. Response status ` + resp.status);
       }
     })
     .catch((error) => {

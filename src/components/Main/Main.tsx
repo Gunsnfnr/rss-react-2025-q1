@@ -22,12 +22,21 @@ const Main = () => {
   const [searchResults, setSearchResults] = useState<Species[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [pageNumber, setPageNumber] = useState(START_PAGE);
-  const [nextPage, setNextPage] = useState<null | string>(null);
   const { pageId } = useParams();
+  const [nextPage, setNextPage] = useState<null | string>(null);
   const navigate = useNavigate();
   const [wasUseEffUsed, setWasUseEffUsed] = useState(false);
   const { theme } = useContext(ThemeContext);
+
+  const pageIdIsNumber = !/^[0-9]+$/.test(pageId as string);
+  const [pageNumber, setPageNumber] = useState(() => {
+    if (pageId && pageIdIsNumber) {
+      console.log('GOTO 404');
+      return START_PAGE;
+    }
+
+    return Number(pageId);
+  });
 
   const handleSearchTermSend = (userInput: string) => {
     setPageNumber(START_PAGE);
@@ -61,15 +70,19 @@ const Main = () => {
 
   useEffect(() => {
     if (wasUseEffUsed) return;
+
     getSearchResults(userInput, pageNumber);
     setWasUseEffUsed(true);
   }, [pageNumber, userInput, wasUseEffUsed]);
 
   useEffect(() => {
     if (pageId && pageId !== String(pageNumber)) {
+      if (pageId && pageIdIsNumber) {
+        navigate('/404');
+      }
       setPageNumber(Number(pageId));
     }
-  }, [pageId, pageNumber]);
+  }, [pageId, pageNumber, navigate, pageIdIsNumber]);
 
   const handleBtn = (page: number) => {
     setIsLoading(true);

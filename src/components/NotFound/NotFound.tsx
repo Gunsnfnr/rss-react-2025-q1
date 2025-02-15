@@ -1,7 +1,14 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import style from './NotFound.module.css';
+import { useEffect } from 'react';
 
 export default function NotFound() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/404', { replace: true });
+  }, [navigate]);
+
   return (
     <div className={style.page_wrapper}>
       <div className={style.not_found_info}>
