@@ -3,6 +3,7 @@ import style from './Details.module.css';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Species } from '../../types';
 import { getSpecies } from '../../api/apiRequest';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const Details = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,6 +12,7 @@ const Details = () => {
   const [species, setSpecies] = useState<Species | undefined>(undefined);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const [userInput] = useLocalStorage('');
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,14 +73,14 @@ const Details = () => {
                   <span className={style.text}>{species.skin_colors}</span>
                 </div>
               </div>
-              <Link to={`/page/${pageId}/`} className={style.close}>
+              <Link to={`/page/${pageId}/?search=${userInput}`} className={style.close}>
                 <button>Close</button>
               </Link>
             </div>
           </div>
           <div
             className={style.details_backdrop}
-            onClick={() => navigate(`/page/${pageId}/`)}
+            onClick={() => navigate(`/page/${pageId}/?search=${userInput}`)}
             aria-label="Close"
           ></div>
         </>
@@ -86,7 +88,7 @@ const Details = () => {
       {isError && (
         <>
           <div className={style.error}>Unfortunately, something went wrong :-/</div>
-          <Link to={`/page/${pageId}/`}>
+          <Link to={`/page/${pageId}/?search=${userInput}`}>
             <button className={style.close}>Close</button>
           </Link>
         </>
