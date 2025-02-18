@@ -45,7 +45,6 @@ const Results = ({ searchResults, error }: ResultsProps) => {
       ) : (
         <EmptyResult error={error} />
       )}
-      {/* {error && 'status' in error && error?.status === 404 && <EmptyResult />} */}
     </>
   );
 };

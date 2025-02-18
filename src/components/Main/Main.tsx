@@ -17,7 +17,7 @@ const Main = () => {
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
 
-  const pageIdIsNotNumber = !/^[0-9]+$/.test(pageId as string);
+  const pageIdIsNotANumber = !/^[0-9]+$/.test(pageId as string);
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, error, isFetching } = swSpeciesApi.useGetAllSpeciesQuery({
     request: searchParams.get('search') || '',
@@ -36,10 +36,10 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (pageId && pageIdIsNotNumber) {
+    if (pageId && pageIdIsNotANumber) {
       navigate('/404');
     }
-  }, [pageId, navigate, pageIdIsNotNumber]);
+  }, [pageId, navigate, pageIdIsNotANumber]);
 
   return (
     <>
