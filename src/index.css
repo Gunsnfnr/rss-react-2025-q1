@@ -5,6 +5,7 @@
   --cards-hover-outline: #848aa7;
   --404-background: rgb(43, 36, 36);
   --button-font-color: #000;
+  --button-hover-font-color: #000;
   --button-background: #888dbf;
   --button-border-color: silver;
   --button-background-color: rgb(165, 175, 221);
@@ -30,6 +31,7 @@
   --cards-background: #a3b5e9;
   --cards-hover-background: #8a96c9;
   --button-font-color: #d4d3d3;
+  --button-hover-font-color: #2c2c2c;
   --button-background: #6b6b79;
   --button-border-color: #6970a1;
 
