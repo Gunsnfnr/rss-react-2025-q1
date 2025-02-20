@@ -1,6 +1,10 @@
 .species_details_wrapper {
   width: 400px;
   margin-left: 10px;
+
+  @media (min-width: 1000px) {
+    margin-left: 50px;
+  }
 }
 
 .species_data {
@@ -71,6 +75,18 @@
   }
   .species_details {
     padding: 40px 20px;
+    margin: 20px 10px 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .species_details {
+    margin: 20px 10px 0 20%;
+  }
+}
+
+@media (max-width: 420px) {
+  .species_details {
     margin: 20px 10px 0 0;
   }
 }

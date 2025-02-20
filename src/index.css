@@ -18,6 +18,8 @@
   --title: #ebca1c;
   --border: #6970a1;
   --font-color: #e0e0e0;
+  --checkbox-color: #28305c;
+  --checkbox-background: #e1d7ee;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -43,4 +45,5 @@
   --button-background-color: rgb(165, 175, 221);
   --title: #9e7505;
   --font-color: #0c0c0c;
+  --checkbox-color: #6b7db3;
 }

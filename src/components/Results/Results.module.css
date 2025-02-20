@@ -2,52 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
   width: calc(100vw - 30px);
-}
 
-.star_wars_species {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 180px;
-  margin: 20px 10px;
-  object-fit: contain;
-  padding: 5px 10px;
-  background-color: var(--cards-background);
-  border-radius: 5px;
-  padding-bottom: 25px;
-
-  .name {
-    color: var(--title);
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    text-align: center;
-  }
-}
-
-.star_wars_species:hover {
-  outline: 1px solid var(--cards-hover-outline);
-  background-color: var(--cards-hover-background);
-}
-
-.image {
-  max-height: 310px;
-  border-radius: 5px;
-  color: var(--font-color);
-}
-
-.link {
-  text-decoration: none;
-}
-
-@media (max-width: 650px) {
-  .image {
-    max-height: 200px;
-  }
-}
-
-@media (max-width: 500px) {
-  .image {
-    max-height: 150px;
+  @media (min-width: 820px) {
+    max-width: 600px;
   }
 }
