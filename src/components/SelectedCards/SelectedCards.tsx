@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import style from './SelectedCards.module.css';
 import { removeAllCards } from '../../store/cardsSlice';
+import { Download } from '../Download/Download';
 
 const SelectedCards = () => {
   const numberOfSelectedCards = useSelector(
@@ -19,6 +20,7 @@ const SelectedCards = () => {
         <div className={style.info}>{numberOfSelectedCards} item(-s) are selected</div>
         <div className={style.buttons}>
           <button onClick={unselectAllHandler}>Unselect all</button>
+          <Download />
         </div>
       </div>
     )
