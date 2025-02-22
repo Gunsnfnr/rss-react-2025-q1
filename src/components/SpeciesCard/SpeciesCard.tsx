@@ -2,7 +2,10 @@ import { Species } from '../../types';
 import { Link } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import style from './SpeciesCars.module.css';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCard, removeCard } from '../../store/cardsSlice';
+import { RootState } from '../../store';
 
 interface SpeciesCardProps {
   species: Species;
@@ -11,14 +14,32 @@ interface SpeciesCardProps {
 const SpeciesCard = ({ species }: SpeciesCardProps) => {
   const [userInput] = useLocalStorage('');
   const speciesId = (/\/\d{1,}\//.exec(species.url) as unknown as string)[0].replace(/\//g, '');
-
   const [isChecked, setIsChecked] = useState(false);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const dispatch = useDispatch();
+  const selectedCards = useSelector((state: RootState) => state.speciesCards.selectedCards);
+  const isInSelected = selectedCards.some((card) => card.name === species.name);
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('e: ', e);
-    console.log('isChecked: ', isChecked);
+  useEffect(() => {
+    if (isInSelected) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [isInSelected, selectedCards, species.name]);
+
+  const handleCheckboxChange = () => {
+    setIsUserInteracting(true);
     setIsChecked(!isChecked);
-    console.log('isChecked: ', isChecked);
+    if (!isChecked) {
+      dispatch(addCard(species));
+    } else {
+      dispatch(removeCard(species));
+    }
+  };
+
+  const handleCheckboxClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
   };
 
   return (
@@ -27,13 +48,12 @@ const SpeciesCard = ({ species }: SpeciesCardProps) => {
         <div className={style.species__element}>
           <div className={style.name}>{species.name}</div>
           <input
-            className={style.species__checkbox}
+            className={`${style.species__checkbox}
+              ${isUserInteracting ? style['user-interacted'] : ''}`}
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
+            onClick={handleCheckboxClick}
           />
         </div>
       </div>

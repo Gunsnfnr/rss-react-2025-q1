@@ -4,10 +4,12 @@
   align-items: center;
   min-width: 180px;
   margin: 15px 10px;
-  object-fit: contain;
   padding: 5px 10px;
   background-color: var(--cards-background);
   border-radius: 5px;
+  border: 4px solid var(--cards-border-color);
+  box-sizing: border-box;
+  height: 64px;
 
   .name {
     color: var(--title);
@@ -25,15 +27,15 @@
   width: 100%;
   position: relative;
   padding: 5px 0;
+  margin: auto;
 }
 
 .species__checkbox {
   position: absolute;
   right: 10px;
-  top: 8px;
+  top: 9px;
   cursor: cell;
   transform: scale(1.5);
-  accent-color: var(--checkbox-color);
 
   appearance: none;
   background-color: var(--checkbox-background);
@@ -52,12 +54,22 @@
   width: 0.65em;
   height: 0.65em;
   transform: scale(0);
-  transition: 0.3s transform ease-in-out;
   box-shadow: inset 1em 1em var(--checkbox-color);
+  transition: none;
 }
 
 .species__checkbox:checked::before {
   transform: scale(1);
+  transition: none;
+}
+
+.species__checkbox.user-interacted::before {
+  transition: 0.3s transform ease-in-out;
+}
+
+.species__checkbox.user-interacted:checked::before {
+  transform: scale(1);
+  transition: 0.3s transform ease-in-out;
 }
 
 .star_wars__species:hover {

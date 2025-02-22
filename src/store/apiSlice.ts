@@ -1,4 +1,3 @@
-// import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { SearchResults, Species } from '../types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 

@@ -3,6 +3,7 @@
   --cards-background: #474c63;
   --cards-hover-background: #51566d;
   --cards-hover-outline: #848aa7;
+  --cards-border-color: none;
   --404-background: rgb(43, 36, 36);
   --button-font-color: #000;
   --button-hover-font-color: #000;
@@ -31,7 +32,8 @@
 :root:has([data-theme='light']) {
   --background: #c4d0e9;
   --cards-background: #a3b5e9;
-  --cards-hover-background: #8a96c9;
+  --cards-hover-background: #95a5e9;
+  --cards-border-color: #888dbf;
   --button-font-color: #d4d3d3;
   --button-hover-font-color: #2c2c2c;
   --button-background: #6b6b79;
