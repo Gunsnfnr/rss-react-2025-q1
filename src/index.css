@@ -22,6 +22,8 @@
   --checkbox-color: #28305c;
   --checkbox-background: #e1d7ee;
 
+  --flyout-background: #2b2b2b;
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -48,4 +50,6 @@
   --title: #9e7505;
   --font-color: #0c0c0c;
   --checkbox-color: #6b7db3;
+
+  --flyout-background: #bac8e6;
 }

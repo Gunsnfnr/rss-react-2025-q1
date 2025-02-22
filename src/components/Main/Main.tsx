@@ -8,6 +8,7 @@ import { Pagination } from '../Pagination/Pagination';
 import { ThemeContext } from '../../context/themeContext';
 import { swSpeciesApi } from '../../store/apiSlice';
 import { useSearchParams } from 'react-router';
+import { SelectedCards } from '../SelectedCards/SelectedCards';
 
 export const START_PAGE = 1;
 
@@ -56,6 +57,7 @@ const Main = () => {
             {data && data.results.length > 0 && <Pagination nextPage={data.next} />}
           </>
         )}
+        <SelectedCards />
       </section>
     </>
   );
