@@ -1,14 +1,14 @@
 import style from './Details.module.css';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { swSpeciesApi } from '../../store/apiSlice';
+import { useGetSpeciesQuery } from '../../store/apiSlice';
 
 const Details = () => {
   const { id } = useParams<{ id: string }>();
   const { pageId } = useParams();
   const navigate = useNavigate();
   const [userInput] = useLocalStorage('');
-  const { data, error, isFetching } = swSpeciesApi.useGetSpeciesQuery({
+  const { data, error, isFetching } = useGetSpeciesQuery({
     speciesId: id as string,
   });
 

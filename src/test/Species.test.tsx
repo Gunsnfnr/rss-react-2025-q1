@@ -1,21 +1,18 @@
-import { describe, test, expect, vi, Mock } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Results } from '../components/Results/Results';
 import { mockSpecies } from './mocks/mockSpecies';
-
-globalThis.fetch = vi.fn(() =>
-  Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve({}),
-  })
-) as Mock;
+import { Provider } from 'react-redux';
+import { store } from '../store';
 
 describe('test Species', () => {
-  test('test render', () => {
+  test('should render species name', () => {
     render(
       <MemoryRouter>
-        <Results searchResults={[mockSpecies]} />,
+        <Provider store={store}>
+          <Results searchResults={[mockSpecies]} error={undefined} />,
+        </Provider>
       </MemoryRouter>
     );
 
