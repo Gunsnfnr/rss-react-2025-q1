@@ -1,13 +1,15 @@
 import { describe, test, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { Pagination } from '../components/Pagination/Pagination';
+import { MemoryRouter } from 'react-router';
 
 describe('test Pagination', () => {
-  test('test render Pagination', () => {
-    const handleBtn = () => {
-      localStorage.setItem('gunsnfnr.swQuery', '');
-    };
-    render(<Pagination handleBtn={handleBtn} page={1} nextPage={null} />);
+  test('should render text on the button', () => {
+    render(
+      <MemoryRouter>
+        <Pagination nextPage={null} />
+      </MemoryRouter>
+    );
 
     const button = screen.getByText('Prev');
     expect(button).toBeTruthy();

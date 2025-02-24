@@ -1,7 +1,3 @@
-:root {
-  --text: #fff;
-}
-
 .pagination {
   display: flex;
   flex-direction: row;
@@ -13,7 +9,7 @@
 }
 
 .page_number {
-  color: #fff;
+  color: var(--font-color);
   padding: 3px 10px;
 }
 

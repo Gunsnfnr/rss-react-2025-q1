@@ -4,8 +4,8 @@ import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { MemoryRouter } from 'react-router';
 import { ErrorButton } from '../components/ErrorButton/ErrorButton';
 
-describe('test EmptyResult', () => {
-  test('test render EmptyResult', async () => {
+describe('test ErrorBoundary', () => {
+  test('should show error message', async () => {
     render(
       <MemoryRouter>
         <ErrorBoundary>

@@ -1,0 +1,35 @@
+@keyframes slideIn {
+  0% {
+    bottom: -107px;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+.flyout {
+  position: fixed;
+  bottom: 0px;
+  right: 5%;
+  padding: 20px;
+  border: 1px solid var(--cards-border-color);
+  border-width: 1px 1px 0 1px;
+  border-radius: 8px 8px 0 0;
+  color: var(--font-color);
+  animation:
+    slideIn 500ms ease-in,
+    ease-out;
+}
+.flyout {
+  background: var(--flyout-background);
+}
+
+.info {
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

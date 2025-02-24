@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router';
 import NotFound from '../components/NotFound/NotFound';
 
 describe('test NotFound', () => {
-  test('test render NotFound', () => {
+  test('should render text on the button', () => {
     render(
       <BrowserRouter>
         <NotFound />

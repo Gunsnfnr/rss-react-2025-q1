@@ -1,24 +1,37 @@
-import { describe, test, expect, vi, Mock } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { Details } from '../components/Details/Details';
 import { BrowserRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../store';
+import { mockSpecies } from './mocks/mockSpecies';
 
-globalThis.fetch = vi.fn(() =>
-  Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve({}),
-  })
-) as Mock;
+vi.mock('../store/apiSlice', async (importOriginal) => {
+  const actual: object = await importOriginal();
+  return {
+    ...actual,
+    useGetSpeciesQuery: () => {
+      return {
+        data: mockSpecies,
+        error: null,
+        isFetching: false,
+        refetch: vi.fn(),
+      };
+    },
+  };
+});
 
 describe('test Details', () => {
-  test('test Details', () => {
+  test('should show loader message', () => {
     render(
       <BrowserRouter>
-        <Details />
+        <Provider store={store}>
+          <Details />
+        </Provider>
       </BrowserRouter>
     );
-    const text = screen.getByText('Loading...');
 
-    expect(text).toBeDefined();
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    expect(screen.getByText(mockSpecies.name)).toBeInTheDocument();
   });
 });

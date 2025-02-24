@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Searcher.css';
 import { ErrorButton } from '../ErrorButton/ErrorButton';
+import { ThemeContext } from '../../context/themeContext';
 
 interface SearcherProps {
   searchTermSend: (userInput: string) => void;
@@ -8,6 +9,7 @@ interface SearcherProps {
 
 const Searcher = ({ searchTermSend }: SearcherProps) => {
   const [userInput, setUserInput] = useState('');
+  const { theme, changeTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
@@ -26,7 +28,7 @@ const Searcher = ({ searchTermSend }: SearcherProps) => {
   };
 
   return (
-    <div className="search">
+    <div className="search" data-theme={theme}>
       <input className="input-field" type="text" value={userInput} onChange={handleChange} />
       <button
         type="button"
@@ -35,6 +37,9 @@ const Searcher = ({ searchTermSend }: SearcherProps) => {
         }}
       >
         Search
+      </button>
+      <button type="button" onClick={changeTheme} title="Click to change theme">
+        Theme: {theme}
       </button>
       <ErrorButton />
     </div>

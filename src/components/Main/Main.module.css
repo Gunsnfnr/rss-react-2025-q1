@@ -4,6 +4,7 @@
 }
 
 .loading {
+  color: var(--font-color);
   position: fixed;
   top: 50%;
   left: 50%;
