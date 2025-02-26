@@ -34,7 +34,7 @@ const Download = () => {
     <a
       className={style.button}
       href={getACsv()}
-      download={`Sw_characters_${numberOfSelectedCards}.csv`}
+      download={`Sw_species_${numberOfSelectedCards}.csv`}
     >
       Download
     </a>

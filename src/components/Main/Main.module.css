@@ -21,6 +21,7 @@
 .results_wrapper {
   display: flex;
   flex-direction: row;
+  padding: 20px 0;
 }
 
 @media (max-width: 500px) {
