@@ -1,0 +1,37 @@
+.page_wrapper {
+  height: 100vh;
+  width: auto;
+  background-image: url('./img/404.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.not_found_info {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 55%;
+  margin-bottom: 15%;
+}
+
+@media screen and (max-width: 800px) {
+  .not_found_info {
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+}
+.not_found {
+  font-size: 28px;
+  padding: 5px 20px;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--404-background);
+}
+
+.to_main_button {
+  width: 100%;
+  border-radius: 0 0 5px 5px;
+}
