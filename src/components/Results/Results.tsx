@@ -1,16 +1,13 @@
 import style from './Results.module.css';
 import { Species } from '../../types';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
 import { EmptyResult } from '../EmptyResult/EmptyResult';
 import { SpeciesCard } from '../SpeciesCard/SpeciesCard';
 
 interface ResultsProps {
   searchResults?: Species[];
-  error: FetchBaseQueryError | SerializedError | undefined;
 }
 
-const Results = ({ searchResults, error }: ResultsProps) => {
+const Results = ({ searchResults }: ResultsProps) => {
   return (
     <>
       {searchResults && searchResults.length > 0 ? (
@@ -20,7 +17,7 @@ const Results = ({ searchResults, error }: ResultsProps) => {
           ))}
         </div>
       ) : (
-        <EmptyResult error={error} />
+        <EmptyResult />
       )}
     </>
   );
