@@ -8,7 +8,6 @@ import { ThemeContext } from '../../context/themeContext';
 import { SelectedCards } from '../SelectedCards/SelectedCards';
 import { Details } from '../Details/Details';
 import { SearchResults, Species } from '../../types';
-import useLoading from '../../hooks/useLoading';
 import { useRouter } from 'next/router';
 
 export const START_PAGE = 1;
@@ -23,17 +22,21 @@ const Main = ({
   const router = useRouter();
   const [storedSearchTerm, setStoredSearchTerm] = useLocalStorage('');
   const { theme } = useContext(ThemeContext);
-  const [isLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     const searchTermFromUrl = router.query.search as string;
 
     if (searchTermFromUrl && searchTermFromUrl !== storedSearchTerm) {
+      setIsLoading(true);
       setStoredSearchTerm(searchTermFromUrl);
     }
 
     if (isInitialLoad) {
+      setIsLoading(true);
+      setIsInitialLoad(false);
+
       if (searchTermFromUrl !== undefined) {
         setStoredSearchTerm(searchTermFromUrl);
       }
@@ -46,13 +49,19 @@ const Main = ({
         { shallow: true }
       );
 
-      setIsInitialLoad(false);
       return;
     }
   }, []);
 
+  useEffect(() => {
+    if (allSpeciesData) {
+      setIsLoading(false);
+    }
+  }, [allSpeciesData]);
+
   const handleSearchTermSend = (userInput: string) => {
     setStoredSearchTerm(userInput);
+    setIsLoading(true);
     router.push(`/page/${START_PAGE}?search=${userInput}`);
   };
 
@@ -69,7 +78,9 @@ const Main = ({
                 <Results searchResults={allSpeciesData.results} />
                 <Details speciesData={speciesData} />
               </div>
-              {allSpeciesData.results.length > 0 && <Pagination nextPage={allSpeciesData.next} />}
+              {allSpeciesData.results?.length > 0 && (
+                <Pagination setIsLoading={setIsLoading} nextPage={allSpeciesData.next} />
+              )}
             </>
           )
         )}
