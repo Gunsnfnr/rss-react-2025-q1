@@ -1,61 +1,77 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Searcher } from '../../components/Searcher/Searcher';
 import { Results } from '../../components/Results/Results';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import style from './Main.module.css';
-import { Outlet, useNavigate, useParams } from 'react-router';
 import { Pagination } from '../Pagination/Pagination';
 import { ThemeContext } from '../../context/themeContext';
-import { swSpeciesApi } from '../../store/apiSlice';
-import { useSearchParams } from 'react-router';
 import { SelectedCards } from '../SelectedCards/SelectedCards';
+import { Details } from '../Details/Details';
+import { SearchResults, Species } from '../../types';
+import useLoading from '../../hooks/useLoading';
+import { useRouter } from 'next/router';
 
 export const START_PAGE = 1;
 
-const Main = () => {
-  const [userInput, setUserInput] = useLocalStorage('');
-  const { pageId } = useParams();
-  const navigate = useNavigate();
+const Main = ({
+  allSpeciesData,
+  speciesData,
+}: {
+  allSpeciesData: SearchResults;
+  speciesData: Species;
+}) => {
+  const router = useRouter();
+  const [storedSearchTerm, setStoredSearchTerm] = useLocalStorage('');
   const { theme } = useContext(ThemeContext);
-
-  const pageIdIsNotANumber = !/^[0-9]+$/.test(pageId as string);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data, error, isFetching } = swSpeciesApi.useGetAllSpeciesQuery({
-    request: searchParams.get('search') || '',
-    page: Number(pageId),
-  });
-
-  const handleSearchTermSend = (userInput: string) => {
-    setUserInput(userInput.trim());
-    navigate(`/page/${START_PAGE}?search=${userInput.trim()}`);
-  };
+  const [isLoading] = useLoading();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    if (!searchParams.get('search')) setSearchParams({ search: userInput.trim() });
-    const searchTermFromUrl = searchParams.get('search');
-    if (searchTermFromUrl) setUserInput(searchTermFromUrl);
+    const searchTermFromUrl = router.query.search as string;
+
+    if (searchTermFromUrl && searchTermFromUrl !== storedSearchTerm) {
+      setStoredSearchTerm(searchTermFromUrl);
+    }
+
+    if (isInitialLoad) {
+      if (searchTermFromUrl !== undefined) {
+        setStoredSearchTerm(searchTermFromUrl);
+      }
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, search: searchTermFromUrl ?? storedSearchTerm },
+        },
+        undefined,
+        { shallow: true }
+      );
+
+      setIsInitialLoad(false);
+      return;
+    }
   }, []);
 
-  useEffect(() => {
-    if (pageId && pageIdIsNotANumber) {
-      navigate('/404');
-    }
-  }, [pageId, navigate, pageIdIsNotANumber]);
+  const handleSearchTermSend = (userInput: string) => {
+    setStoredSearchTerm(userInput);
+    router.push(`/page/${START_PAGE}?search=${userInput}`);
+  };
 
   return (
     <>
       <Searcher searchTermSend={handleSearchTermSend} />
       <section className={style.main} data-theme={theme}>
-        {isFetching ? (
+        {isLoading ? (
           <div className={style.loading}>Loading...</div>
         ) : (
-          <>
-            <div className={style.results_wrapper}>
-              <Results searchResults={data?.results} error={error} />
-              <Outlet />
-            </div>
-            {data && data.results.length > 0 && <Pagination nextPage={data.next} />}
-          </>
+          allSpeciesData && (
+            <>
+              <div className={style.results_wrapper}>
+                <Results searchResults={allSpeciesData.results} />
+                <Details speciesData={speciesData} />
+              </div>
+              {allSpeciesData.results.length > 0 && <Pagination nextPage={allSpeciesData.next} />}
+            </>
+          )
         )}
         <SelectedCards />
       </section>

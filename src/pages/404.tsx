@@ -7,11 +7,12 @@ const Page404 = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/404');
-  }, [router]);
+    router.push('/404', undefined, { shallow: true });
+  }, []);
 
   const handleToMainClick = () => {
-    router.push('/').catch(() => {});
+    console.log('handleToMainClick: ');
+    router.push('/');
   };
 
   const { theme } = useContext(ThemeContext);
