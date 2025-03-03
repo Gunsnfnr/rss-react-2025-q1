@@ -1,14 +1,10 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import style from './Page404.module.css';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { ThemeContext } from '../context/themeContext';
 
-const Page404 = () => {
+const NotFound = () => {
   const router = useRouter();
-
-  useEffect(() => {
-    router.push('/404', undefined, { shallow: true });
-  }, []);
 
   const handleToMainClick = () => {
     router.push('/');
@@ -28,4 +24,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default NotFound;
