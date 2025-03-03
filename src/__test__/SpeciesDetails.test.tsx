@@ -2,20 +2,20 @@ import { describe, test, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import { store } from '../store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router';
 import { Details } from '../components/Details/Details';
+import { mockSpecies } from './mocks/mockSpecies';
+
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('test SpeciesDetails', () => {
   test('should show loader message', () => {
     render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <Details />
-        </Provider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <Details speciesData={mockSpecies} />
+      </Provider>
     );
-    const text = screen.getByText('Loading...');
+    const classification = screen.getByText('mammal');
 
-    expect(text).toBeDefined();
+    expect(classification).toBeDefined();
   });
 });
