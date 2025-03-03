@@ -14,6 +14,7 @@ const eslintConfig = [
   ...compat.config({
     extends: ['next/core-web-vitals', 'next/typescript'],
   }),
+  eslintPluginPrettier,
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
@@ -21,7 +22,6 @@ const eslintConfig = [
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'react-compiler': reactCompiler,
-      prettier: eslintPluginPrettier,
     },
     rules: {
       ...react.configs.recommended.rules,

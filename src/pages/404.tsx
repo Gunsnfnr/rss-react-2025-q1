@@ -11,7 +11,6 @@ const Page404 = () => {
   }, []);
 
   const handleToMainClick = () => {
-    console.log('handleToMainClick: ');
     router.push('/');
   };
 
