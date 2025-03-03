@@ -2,6 +2,7 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ThemeProvider } from '../../context/themeContext';
 import { SearchResults, Species } from '../../types';
 import { Main } from '../../components/Main/Main';
+import Head from 'next/head';
 
 export const getServerSideProps = (async (context) => {
   const search = context.query.search || '';
@@ -25,8 +26,13 @@ export default function Home({
   speciesData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <ThemeProvider>
-      <Main allSpeciesData={allSpeciesData} speciesData={speciesData as Species} />
-    </ThemeProvider>
+    <>
+      <Head>
+        <title>Next.js React App</title>
+      </Head>
+      <ThemeProvider>
+        <Main allSpeciesData={allSpeciesData} speciesData={speciesData as Species} />
+      </ThemeProvider>
+    </>
   );
 }
