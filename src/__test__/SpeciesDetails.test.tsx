@@ -5,7 +5,13 @@ import { Provider } from 'react-redux';
 import { Details } from '../components/Details/Details';
 import { mockSpecies } from './mocks/mockSpecies';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
+  useParams: () => ({}),
+}));
 
 describe('test SpeciesDetails', () => {
   test('should show loader message', () => {

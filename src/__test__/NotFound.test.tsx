@@ -3,7 +3,7 @@ import { screen, render } from '@testing-library/react';
 import Page404 from '../app/not-found';
 import mockRouter from 'next-router-mock';
 
-vi.mock('next/router', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => mockRouter,
 }));
 

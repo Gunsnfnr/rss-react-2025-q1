@@ -5,7 +5,17 @@ import { Provider } from 'react-redux';
 import { store } from '../store';
 import { mockSearchResults, mockSpecies } from './mocks/mockSpecies';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
+
+  useParams: () => ({}),
+}));
 
 describe('test Main', () => {
   test('should render Search button', () => {

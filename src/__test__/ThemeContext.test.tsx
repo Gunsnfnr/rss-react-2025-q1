@@ -2,10 +2,12 @@ import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '../context/themeContext';
 import { Searcher } from '../components/Searcher/Searcher';
-import mockRouter from 'next-router-mock';
 
-vi.mock('next/router', () => ({
-  useRouter: () => mockRouter,
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
 }));
 
 beforeEach(() => {

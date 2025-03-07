@@ -5,7 +5,13 @@ import { mockSpecies } from './mocks/mockSpecies';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
+  useParams: () => ({}),
+}));
 
 describe('test Species', () => {
   test('should render species name', () => {

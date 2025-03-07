@@ -5,8 +5,15 @@ import { Provider } from 'react-redux';
 import { mockSpecies } from './mocks/mockSpecies';
 import { SpeciesCard } from '../components/SpeciesCard/SpeciesCard';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
-describe('test CharacterCard', () => {
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
+  useParams: () => ({}),
+}));
+
+describe('test SpeciesCard', () => {
   const speciesName = 'Wookie';
 
   test('should show species card', () => {

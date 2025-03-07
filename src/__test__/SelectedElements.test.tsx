@@ -5,7 +5,7 @@ import { SelectedCards } from '../components/SelectedCards/SelectedCards';
 import mockStore from './mocks/mockStore';
 
 URL.createObjectURL = vi.fn();
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+vi.mock('next/navigation', () => vi.importActual('next-router-mock'));
 
 describe('test SelectedCards', () => {
   test('should render text on the button', () => {

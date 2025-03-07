@@ -3,7 +3,7 @@ import { screen, render, fireEvent } from '@testing-library/react';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { ErrorButton } from '../components/ErrorButton/ErrorButton';
 
-vi.mock('next/router', () => vi.importActual('next-router-mock'));
+vi.mock('next/navigation', () => vi.importActual('next-router-mock'));
 
 describe('test ErrorBoundary', () => {
   test('should show error message', async () => {

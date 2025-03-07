@@ -15,4 +15,5 @@ export const mockSpecies: Species = {
 export const mockSearchResults: SearchResults = {
   results: [mockSpecies],
   next: 'https://swapi.dev/api/species/?search=a&page=2',
+  count: 1,
 };
