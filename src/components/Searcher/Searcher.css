@@ -1,18 +1,24 @@
 button {
   border-radius: 5px;
-  border: 1px solid #6970a1;
+  border: 1px solid var(--border);
   padding: 0.2rem 1.2rem;
   font-size: 1rem;
   font-weight: 400;
   font-family: inherit;
-  background-color: #888dbf;
+  color: var(--button-font-color);
+  background-color: var(--button-background);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: silver;
-  background-color: rgb(165, 175, 221);
+button:hover:not(:disabled) {
+  border-color: var(--button-border-color);
+  background-color: var(--button-background-color);
+  color: var(--button-hover-font-color);
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 
 .search {
@@ -20,7 +26,7 @@ button:hover {
   gap: 20px;
   padding: 15px 0 20px 40px;
   flex-wrap: wrap;
-  border-bottom: 1px solid #6970a1;
+  border-bottom: 1px solid var(--border);
 }
 
 .input-field {

@@ -9,3 +9,8 @@ export interface Species {
   language: string;
   url: string;
 }
+
+export interface SearchResults {
+  results: Species[];
+  next: string;
+}

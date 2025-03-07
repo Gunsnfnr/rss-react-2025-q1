@@ -1,29 +1,30 @@
+import { useNavigate, useParams } from 'react-router';
 import style from './Pagination.module.css';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface PaginationProps {
-  handleBtn: (page: number) => void;
-  page: number;
   nextPage: string | null;
 }
 
 const Pagination = (props: PaginationProps) => {
+  const { pageId } = useParams();
+  const page = Number(pageId);
+  const navigate = useNavigate();
+  const [userInput] = useLocalStorage('');
+
   const handleNavBtn = (page: number) => {
-    props.handleBtn(page);
+    navigate(`/page/${page}?search=${userInput}`);
   };
 
   return (
     <div className={style.pagination}>
-      <button
-        className={style.prev}
-        onClick={() => handleNavBtn(props.page - 1)}
-        disabled={props.page === 1}
-      >
+      <button className={style.prev} onClick={() => handleNavBtn(page - 1)} disabled={page === 1}>
         Prev
       </button>
-      <div className={style.page_number}>{props.page}</div>
+      <div className={style.page_number}>{page}</div>
       <button
         className={style.next}
-        onClick={() => handleNavBtn(props.page + 1)}
+        onClick={() => handleNavBtn(page + 1)}
         disabled={!props.nextPage}
       >
         Next

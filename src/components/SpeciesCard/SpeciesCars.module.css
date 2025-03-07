@@ -1,0 +1,99 @@
+.star_wars__species {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 180px;
+  padding: 5px 10px;
+  background-color: var(--cards-background);
+  border-radius: 5px;
+  border: 3px solid var(--cards-border-color);
+  box-sizing: border-box;
+  height: 64px;
+
+  .name {
+    color: var(--title);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+}
+
+.species__element {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  padding: 5px 0;
+  margin: auto;
+}
+
+.species__checkbox {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  cursor: cell;
+  transform: scale(1.5);
+
+  appearance: none;
+  background-color: var(--checkbox-background);
+  color: var(--checkbox-color);
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid var(--checkbox-color);
+  border-radius: 0.15em;
+
+  display: grid;
+  place-content: center;
+}
+
+.species__checkbox::before {
+  content: '';
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  box-shadow: inset 1em 1em var(--checkbox-color);
+  transition: none;
+}
+
+.species__checkbox:checked::before {
+  transform: scale(1);
+  transition: none;
+}
+
+.species__checkbox.user-interacted::before {
+  transition: 0.3s transform ease-in-out;
+}
+
+.species__checkbox.user-interacted:checked::before {
+  transform: scale(1);
+  transition: 0.3s transform ease-in-out;
+}
+
+.star_wars__species:hover {
+  outline: 1px solid var(--cards-hover-outline);
+  background-color: var(--cards-hover-background);
+}
+
+.image {
+  max-height: 310px;
+  border-radius: 5px;
+  color: var(--font-color);
+}
+
+.link {
+  text-decoration: none;
+}
+
+@media (max-width: 650px) {
+  .image {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 500px) {
+  .image {
+    max-height: 150px;
+  }
+}

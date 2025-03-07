@@ -28,7 +28,7 @@
   font-size: 28px;
   padding: 5px 20px;
   border-radius: 5px 5px 0 0;
-  background-color: rgb(43, 36, 36);
+  background-color: var(--404-background);
 }
 
 .to_main_button {

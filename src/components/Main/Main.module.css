@@ -4,6 +4,7 @@
 }
 
 .loading {
+  color: var(--font-color);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -20,6 +21,7 @@
 .results_wrapper {
   display: flex;
   flex-direction: row;
+  padding: 20px 0;
 }
 
 @media (max-width: 500px) {
