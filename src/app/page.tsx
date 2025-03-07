@@ -1,8 +1,10 @@
+'use client';
+
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 
-const Page = () => {
+const InitialPage = () => {
   const router = useRouter();
   useEffect(() => {
     router.push('/page/1');
@@ -17,4 +19,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default InitialPage;
