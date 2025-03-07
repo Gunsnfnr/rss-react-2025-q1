@@ -13,4 +13,5 @@ export interface Species {
 export interface SearchResults {
   results: Species[];
   next: string;
+  count: number | null;
 }

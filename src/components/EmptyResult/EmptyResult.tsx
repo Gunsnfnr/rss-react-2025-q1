@@ -1,20 +1,24 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import style from './EmptyResult.module.css';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 const EmptyResult = () => {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  console.log('searchParams: ', searchParams);
   const [userInput, setUserInput] = useState('');
 
   useEffect(() => {
-    const searchTermFromUrl = router.query.search as string;
+    if (typeof window === 'undefined') return;
+    const search = searchParams?.get('search') ?? '';
     const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
-    if (searchTermFromUrl !== undefined) {
-      setUserInput(searchTermFromUrl);
+    if (search !== undefined) {
+      setUserInput(search);
     } else if (storedSearchTerm) {
       setUserInput(storedSearchTerm);
     }
-  }, [router.query.search]);
+  }, [searchParams]);
   return (
     <>
       <div className={style.empty}>

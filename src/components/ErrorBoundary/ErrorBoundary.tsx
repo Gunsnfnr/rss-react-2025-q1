@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
@@ -8,7 +10,7 @@ interface ErrorBoundaryState {
   errorMessage: string;
 }
 
-export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
+export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: {
     errorMessage: string;
   } = {

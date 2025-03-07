@@ -7,17 +7,6 @@
   }
 }
 
-.species_data {
-  margin: 20px 0;
-  word-wrap: break-word;
-  .title {
-    color: var(--details-title-color);
-  }
-  .text {
-    color: var(--details-text-color);
-  }
-}
-
 .species_details {
   position: fixed;
   padding: 40px;
@@ -27,11 +16,6 @@
   flex-direction: column;
   background-color: var(--details-background-color);
   z-index: 3;
-}
-
-.name {
-  color: var(--title);
-  font-weight: 500;
 }
 
 .species_details div {
@@ -89,6 +73,12 @@
   .species_details {
     margin: 20px 10px 0 0;
   }
+}
+
+.not_found {
+  margin-bottom: 30px;
+  width: 160px;
+  text-align: center;
 }
 
 .error_wrapper {

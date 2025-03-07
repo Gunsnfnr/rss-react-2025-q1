@@ -1,3 +1,4 @@
+'use client';
 import { useContext, useEffect, useState } from 'react';
 import { Searcher } from '../../components/Searcher/Searcher';
 import { Results } from '../../components/Results/Results';
@@ -8,7 +9,7 @@ import { ThemeContext } from '../../context/themeContext';
 import { SelectedCards } from '../SelectedCards/SelectedCards';
 import { Details } from '../Details/Details';
 import { SearchResults, Species } from '../../types';
-import { useRouter } from 'next/router';
+import { useSearchParams, useRouter, useParams } from 'next/navigation';
 
 export const START_PAGE = 1;
 
@@ -20,13 +21,17 @@ const Main = ({
   speciesData: Species;
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [storedSearchTerm, setStoredSearchTerm] = useLocalStorage('');
   const { theme } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const params = useParams();
+  const { pagenumber } = params as Record<string, string>;
 
   useEffect(() => {
-    const searchTermFromUrl = router.query.search as string;
+    const searchTermFromUrl = searchParams?.get('search') ?? '';
+    const id = searchParams?.get('id');
 
     if (searchTermFromUrl && searchTermFromUrl !== storedSearchTerm) {
       setIsLoading(true);
@@ -34,27 +39,26 @@ const Main = ({
     }
 
     if (isInitialLoad) {
+      router.push(
+        `/page/${pagenumber}?search=${searchTermFromUrl || storedSearchTerm}
+${id ? '&id=' + id : ''}`
+      );
       setIsLoading(true);
       setIsInitialLoad(false);
 
       if (searchTermFromUrl !== undefined) {
         setStoredSearchTerm(searchTermFromUrl);
       }
-      router.push(
-        {
-          pathname: router.pathname,
-          query: { ...router.query, search: searchTermFromUrl ?? storedSearchTerm },
-        },
-        undefined,
-        { shallow: true }
-      );
 
       return;
     }
   }, []);
 
   useEffect(() => {
-    if (allSpeciesData) {
+    if (
+      (allSpeciesData && allSpeciesData.results?.length > 0) ||
+      (allSpeciesData && allSpeciesData.count === 0)
+    ) {
       setIsLoading(false);
     }
   }, [allSpeciesData]);
@@ -79,7 +83,11 @@ const Main = ({
                 <Details speciesData={speciesData} />
               </div>
               {allSpeciesData.results?.length > 0 && (
-                <Pagination setIsLoading={setIsLoading} nextPage={allSpeciesData.next} />
+                <Pagination
+                  setIsLoading={setIsLoading}
+                  pagenumber={pagenumber}
+                  nextPage={allSpeciesData.next}
+                />
               )}
             </>
           )

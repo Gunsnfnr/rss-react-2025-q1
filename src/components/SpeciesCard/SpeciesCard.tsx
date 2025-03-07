@@ -4,20 +4,26 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCard, removeCard } from '../../store/cardsSlice';
 import { RootState } from '../../store';
-import { useRouter } from 'next/router';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 interface SpeciesCardProps {
   species: Species;
 }
 
 const SpeciesCard = ({ species }: SpeciesCardProps) => {
-  const speciesId = (/\/\d{1,}\//.exec(species.url) as unknown as string)[0].replace(/\//g, '');
+  const match = species.url.match(/\/(\d+)\//);
+  const speciesId = match ? match[1] : '';
   const [isChecked, setIsChecked] = useState(false);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const dispatch = useDispatch();
   const selectedCards = useSelector((state: RootState) => state.speciesCards.selectedCards);
   const isInSelected = selectedCards.some((card) => card.name === species.name);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const params = useParams();
+  const { pagenumber } = params as Record<string, string>;
+  const search = searchParams?.get('search') ?? '';
 
   useEffect(() => {
     if (isInSelected) {
@@ -38,10 +44,7 @@ const SpeciesCard = ({ species }: SpeciesCardProps) => {
   };
 
   const handleCharacterCardClick = () => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, id: speciesId },
-    });
+    router.push(`/page/${pagenumber}?search=${search}&id=${speciesId}`);
   };
 
   const handleCheckboxClick = (event: React.MouseEvent<HTMLInputElement>) => {

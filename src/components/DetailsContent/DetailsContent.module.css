@@ -1,0 +1,16 @@
+.species_data {
+  margin: 20px 0;
+  word-wrap: break-word;
+
+  .title {
+    color: var(--details-title-color);
+  }
+  .text {
+    color: var(--details-text-color);
+  }
+}
+
+.name {
+  color: var(--title);
+  font-weight: 500;
+}

@@ -1,12 +1,26 @@
 import style from './Details.module.css';
 import { Species } from '../../types';
-import { useRouter } from 'next/router';
-import useLoading from '../../hooks/useLoading';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { DetailsContent } from '../DetailsContent/DetailsContent';
 
 const Details = ({ speciesData }: { speciesData: Species }) => {
-  const [isDetailsLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { pagenumber, search } = router.query;
+  const searchParams = useSearchParams();
+
+  const params = useParams();
+  const { pagenumber } = params as Record<string, string>;
+  const search = searchParams?.get('search') ?? '';
+  const id = searchParams?.get('id');
+
+  useEffect(() => {
+    if (!speciesData && id) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [speciesData, id]);
 
   const handleCloseClick = () => {
     router.push(`/page/${pagenumber}/?search=${search}`);
@@ -14,44 +28,16 @@ const Details = ({ speciesData }: { speciesData: Species }) => {
 
   return (
     <>
-      {isDetailsLoading && <div className={style.loading_details}>Loading...</div>}
-      {!isDetailsLoading && speciesData && (
+      {isLoading && <div className={style.loading_details}>Loading...</div>}
+      {!isLoading && speciesData && (
         <>
           <div className={style.species_details_wrapper}>
             <div className={style.species_details}>
-              <div className={style.name}>{speciesData.name}</div>
-              <div className={style.species_data}>
-                <div>
-                  <span className={style.title}>Classification:</span>{' '}
-                  <span className={style.text}>{speciesData.classification}</span>
-                </div>
-                <div>
-                  <span className={style.title}>Average lifespan:</span>{' '}
-                  <span className={style.text}>{speciesData.average_lifespan}</span>
-                  <span className={style.text}>&nbsp;years</span>
-                </div>
-                <div>
-                  <span className={style.title}>Average height:</span>{' '}
-                  <span className={style.text}>{speciesData.average_height}</span>
-                  <span className={style.text}>&nbsp;cm</span>
-                </div>
-                <div>
-                  <span className={style.title}>Language:</span>{' '}
-                  <span className={style.text}>{speciesData.language}</span>
-                </div>
-                <div>
-                  <span className={style.title}>Eye colors:</span>{' '}
-                  <span className={style.text}>{speciesData.eye_colors}</span>
-                </div>
-                <div>
-                  <span className={style.title}>Hair colors:</span>{' '}
-                  <span className={style.text}>{speciesData.hair_colors}</span>
-                </div>
-                <div>
-                  <span className={style.title}>Skin colors:</span>{' '}
-                  <span className={style.text}>{speciesData.skin_colors}</span>
-                </div>
-              </div>
+              {speciesData && 'detail' in speciesData ? (
+                <div className={style.not_found}>Not found</div>
+              ) : (
+                <DetailsContent speciesData={speciesData} />
+              )}
               <button onClick={handleCloseClick} className={style.close}>
                 Close
               </button>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import style from './Searcher.module.css';
 import { ErrorButton } from '../ErrorButton/ErrorButton';
 import { ThemeContext } from '../../context/themeContext';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 interface SearcherProps {
   searchTermSend: (userInput: string) => void;
@@ -11,17 +11,19 @@ interface SearcherProps {
 const Searcher = ({ searchTermSend }: SearcherProps) => {
   const [userInput, setUserInput] = useState('');
   const { theme, changeTheme } = useContext(ThemeContext);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const searchTermFromUrl = router.query.search as string;
+    if (typeof window === 'undefined') return;
+    const searchTermFromUrl = searchParams?.get('search') ?? '';
     const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
+
     if (searchTermFromUrl !== undefined) {
       setUserInput(searchTermFromUrl);
     } else if (storedSearchTerm) {
       setUserInput(storedSearchTerm);
     }
-  }, [router.query.search]);
+  }, [searchParams]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
