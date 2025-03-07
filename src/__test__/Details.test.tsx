@@ -5,21 +5,6 @@ import { Provider } from 'react-redux';
 import { store } from '../store';
 import { mockSpecies } from './mocks/mockSpecies';
 
-// vi.mock('../store/apiSlice', async (importOriginal) => {
-//   const actual: object = await importOriginal();
-//   return {
-//     ...actual,
-//     useGetSpeciesQuery: () => {
-//       return {
-//         data: mockSpecies,
-//         error: null,
-//         isFetching: false,
-//         refetch: vi.fn(),
-//       };
-//     },
-//   };
-// });
-
 vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('test Details', () => {

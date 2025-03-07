@@ -11,10 +11,8 @@ vi.mock('next/router', () => {
   const events = {
     on: vi.fn(),
     off: vi.fn(),
-    emit: vi.fn(),
   };
   return {
-    __esModule: true,
     default: { push, events, query: { search: 'wo' } },
     useRouter: () => ({ push, query: { search: 'wo' } }),
   };
