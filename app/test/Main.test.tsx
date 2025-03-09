@@ -4,13 +4,14 @@ import { Main } from '../components/Main/Main';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { store } from '../store';
+import { mockSearchResults, mockSpecies } from './mocks/mockSpecies';
 
 describe('test Main', () => {
   test('should render Search button', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Main />
+          <Main data={mockSearchResults} detailsData={mockSpecies} />
         </Provider>
       </MemoryRouter>
     );

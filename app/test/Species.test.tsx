@@ -11,7 +11,7 @@ describe('test Species', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Results searchResults={[mockSpecies]} error={undefined} />,
+          <Results searchResults={[mockSpecies]} />,
         </Provider>
       </MemoryRouter>
     );

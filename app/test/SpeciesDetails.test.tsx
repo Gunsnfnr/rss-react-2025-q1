@@ -4,18 +4,19 @@ import { store } from '../store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 import { Details } from '../components/Details/Details';
+import { mockSpecies } from './mocks/mockSpecies';
 
 describe('test SpeciesDetails', () => {
   test('should show loader message', () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
-          <Details />
+          <Details detailsData={mockSpecies} />
         </Provider>
       </BrowserRouter>
     );
-    const text = screen.getByText('Loading...');
+    const speciesName = screen.getByText('Wookie');
 
-    expect(text).toBeDefined();
+    expect(speciesName).toBeDefined();
   });
 });

@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { Species } from '../../types';
+import { type Species } from '../../types';
 import { mockSpecies } from './mockSpecies';
 
 const initialState: { selectedCards: Species[] } = { selectedCards: [mockSpecies] };

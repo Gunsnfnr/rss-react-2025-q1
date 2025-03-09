@@ -26,12 +26,11 @@ describe('test Details', () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
-          <Details />
+          <Details detailsData={mockSpecies} />
         </Provider>
       </BrowserRouter>
     );
 
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByText(mockSpecies.name)).toBeInTheDocument();
   });
 });
