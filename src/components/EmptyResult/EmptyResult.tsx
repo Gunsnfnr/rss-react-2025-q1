@@ -1,29 +1,27 @@
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useEffect, useState } from 'react';
 import style from './EmptyResult.module.css';
-import { SerializedError } from '@reduxjs/toolkit';
+import { useRouter } from 'next/router';
 
-interface EmptyResultProps {
-  error?: FetchBaseQueryError | SerializedError | undefined;
-}
+const EmptyResult = () => {
+  const router = useRouter();
+  const [userInput, setUserInput] = useState('');
 
-const EmptyResult = ({ error }: EmptyResultProps) => {
-  const [userInput] = useLocalStorage('');
-
+  useEffect(() => {
+    const searchTermFromUrl = router.query.search as string;
+    const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
+    if (searchTermFromUrl !== undefined) {
+      setUserInput(searchTermFromUrl);
+    } else if (storedSearchTerm) {
+      setUserInput(storedSearchTerm);
+    }
+  }, [router.query.search]);
   return (
     <>
       <div className={style.empty}>
-        {error && 'status' in error && error?.status === 404 ? (
-          <div>Nothing was found</div>
-        ) : (
-          <>
-            <div>Nothing was found for the search term &quot;{userInput}&quot;</div>
-            <div>Don&apos;t forget, we are looking for Star Wars species o_0</div>
-          </>
-        )}
-        {error && 'status' in error && error.status !== 404 && (
-          <div className={style.error}>Unfortunately, something went wrong :-/</div>
-        )}
+        <>
+          <div>Nothing was found for the search term &quot;{userInput}&quot;</div>
+          <div>Don&apos;t forget, we are looking for Star Wars species o_0</div>
+        </>
       </div>
     </>
   );

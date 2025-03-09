@@ -17,6 +17,9 @@
     margin-bottom: 5px;
     text-align: center;
   }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .species__element {

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './Searcher.css';
+import style from './Searcher.module.css';
 import { ErrorButton } from '../ErrorButton/ErrorButton';
 import { ThemeContext } from '../../context/themeContext';
+import { useRouter } from 'next/router';
 
 interface SearcherProps {
   searchTermSend: (userInput: string) => void;
@@ -10,26 +11,30 @@ interface SearcherProps {
 const Searcher = ({ searchTermSend }: SearcherProps) => {
   const [userInput, setUserInput] = useState('');
   const { theme, changeTheme } = useContext(ThemeContext);
+  const router = useRouter();
 
   useEffect(() => {
+    const searchTermFromUrl = router.query.search as string;
     const storedSearchTerm: string | null = localStorage.getItem('gunsnfnr.swQuery');
-    if (storedSearchTerm) {
+    if (searchTermFromUrl !== undefined) {
+      setUserInput(searchTermFromUrl);
+    } else if (storedSearchTerm) {
       setUserInput(storedSearchTerm);
     }
-  }, []);
+  }, [router.query.search]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
   };
 
   const handleClick: () => void = () => {
+    searchTermSend(userInput.trim());
     setUserInput(userInput.trim());
-    searchTermSend(userInput);
   };
 
   return (
-    <div className="search" data-theme={theme}>
-      <input className="input-field" type="text" value={userInput} onChange={handleChange} />
+    <div className={style.search} data-theme={theme}>
+      <input className={style.input_field} type="text" value={userInput} onChange={handleChange} />
       <button
         type="button"
         onClick={() => {
